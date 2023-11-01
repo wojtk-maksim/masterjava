@@ -1,5 +1,7 @@
 package ru.javaops.masterjava.upload;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.thymeleaf.context.WebContext;
 import ru.javaops.masterjava.model.User;
 
@@ -24,6 +26,8 @@ public class UploadServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Logger log = LoggerFactory.getLogger(UploadServlet.class);
+        log.info("hi hi hi hi hi hi hi");
         final WebContext webContext = new WebContext(req, resp, req.getServletContext(), req.getLocale());
         engine.process("upload", webContext, resp.getWriter());
     }
