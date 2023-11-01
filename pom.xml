@@ -24,6 +24,8 @@
         <module>parent-web</module>
 
         <module>common</module>
+        <module>test</module>
+
         <module>web</module>
         <module>services</module>
     </modules>
