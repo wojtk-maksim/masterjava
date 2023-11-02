@@ -1,13 +1,13 @@
 package ru.javaops.masterjava.upload;
 
-import ru.javaops.masterjava.model.User;
-import ru.javaops.masterjava.model.UserFlag;
+import ru.javaops.masterjava.persist.model.User;
+import ru.javaops.masterjava.persist.model.UserFlag;
 import ru.javaops.masterjava.xml.schema.ObjectFactory;
 import ru.javaops.masterjava.xml.util.JaxbParser;
 import ru.javaops.masterjava.xml.util.JaxbUnmarshaller;
 import ru.javaops.masterjava.xml.util.StaxStreamProcessor;
 
-import jakarta.xml.bind.JAXBException;
+import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.XMLEvent;
 import java.io.InputStream;
