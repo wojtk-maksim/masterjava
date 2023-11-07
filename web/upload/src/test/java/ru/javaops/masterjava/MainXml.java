@@ -39,7 +39,7 @@ public class MainXml {
         System.out.println();
         String html = toHtml(users, projectName);
         System.out.println(html);
-        try (Writer writer = Files.newBufferedWriter(Paths.get("out/users.html"))) {
+        try (Writer writer = Files.newBufferedWriter(Paths.get("out/result.html"))) {
             writer.write(html);
         }
 
@@ -112,7 +112,7 @@ public class MainXml {
 
     private static String toHtml(Set<User> users, String projectName) {
         final ContainerTag table = table().with(
-                tr().with(th("FullName"), th("email")))
+                        tr().with(th("FullName"), th("email")))
                 .attr("border", "1")
                 .attr("cellpadding", "8")
                 .attr("cellspacing", "0");
