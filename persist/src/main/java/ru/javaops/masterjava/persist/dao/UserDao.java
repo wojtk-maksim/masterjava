@@ -7,7 +7,9 @@ import org.skife.jdbi.v2.sqlobject.customizers.BatchChunkSize;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapperFactory;
 import ru.javaops.masterjava.persist.DBIProvider;
 import ru.javaops.masterjava.persist.model.User;
+import ru.javaops.masterjava.persist.model.UserGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RegisterMapperFactory(EntityMapperFactory.class)
@@ -26,7 +28,6 @@ public abstract class UserDao implements AbstractDao {
     @SqlQuery("SELECT nextval('user_seq')")
     abstract int getNextVal();
 
-    @Transaction
     public int getSeqAndSkip(int step) {
         int id = getNextVal();
         DBIProvider.getDBI().useHandle(h -> h.execute("ALTER SEQUENCE user_seq RESTART WITH " + (id + step)));
@@ -55,8 +56,15 @@ public abstract class UserDao implements AbstractDao {
     public abstract int[] insertBatch(@BindBean List<User> users, @BatchChunkSize int chunkSize);
 
 
-    public List<String> insertAndGetConflictEmails(List<User> users) {
+    public List<String> insertAndGetConflictEmails(List<User> users, UserGroupDao userGroupDao, List<List<UserGroup>> groups) {
         int[] result = insertBatch(users, users.size());
+        List<UserGroup> groupsToInsert = new ArrayList<>();
+        for (int i = 0; i < result.length; i++) {
+            if (result[i] == 1) {
+                groupsToInsert.addAll(new ArrayList<>(groups.get(i)));
+            }
+        }
+        userGroupDao.insertBatch(groupsToInsert);
         return IntStreamEx.range(0, users.size())
                 .filter(i -> result[i] == 0)
                 .mapToObj(index -> users.get(index).getEmail())
