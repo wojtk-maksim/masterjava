@@ -78,6 +78,13 @@
                 </includes>
             </resource>
             <resource>
+                <directory>${masterjava.config}</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>app.conf</include>
+                </includes>
+            </resource>
+            <resource>
                 <directory>src/main/resources</directory>
             </resource>
         </resources>
